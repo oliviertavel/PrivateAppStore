@@ -18,7 +18,9 @@ class AppController {
         return try req.content.decode(App.self).save(on: req)
     }
     
-    func delete(_ req: Request) throws -> Future<App> {
-        return
+    func delete(_ req: Request) throws -> Future<HTTPStatus> {
+        return try req.parameters.next(App.self).flatMap { app in
+            return app.delete(on: req)
+        }.transform(to: .ok)
     }
 }

@@ -1,10 +1,12 @@
-import Routing
 import Vapor
 
 /// Register your application's routes here.
-///
-/// [Learn More →](https://docs.vapor.codes/3.0/getting-started/structure/#routesswift)
 public func routes(_ router: Router) throws {
+    // Basic "Hello, world!" example
+    router.get("hello") { req in
+        return "Hello, world!"
+    }
+    
     // Example of configuring a controller
     let todoController = TodoController()
     router.get("todos", use: todoController.index)
@@ -14,5 +16,5 @@ public func routes(_ router: Router) throws {
     let appController = AppController()
     router.get("apps", use: appController.index)
     router.post("apps", use: appController.create)
-    router.delete("apps", use: appController.delete)
+    router.delete("apps", App.parameter, use: appController.delete)
 }
