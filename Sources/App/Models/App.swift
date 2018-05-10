@@ -6,37 +6,25 @@
 //
 
 import Vapor
-import FluentSQLite
+import FluentPostgreSQL
 
-final class App: SQLiteModel {
+final class App: Codable {
     
     var id: Int?
-    var applicationId: String
+    var appID: String
     var name: String
     var fileURL: String?
     var fileName: String?
     var version: String?
     var build: String?
     
-    init(id: Int? = nil,
-         applicationId: String,
-         name: String,
-         fileURL: String? = nil,
-         fileName: String? = nil,
-         version: String? = nil,
-         build: String? = nil) {
-        self.id = id
-        self.applicationId = applicationId
+    init(appID: String, name: String) {
+        self.appID = appID
         self.name = name
-        self.fileURL = fileURL
-        self.fileName = fileName
-        self.version = version
-        self.build = build
     }
 }
 
 extension App: Content {}
-
+extension App: PostgreSQLModel {}
 extension App: Migration {}
-
 extension App: Parameter {}
