@@ -19,14 +19,14 @@ struct AppsController: RouteCollection {
     
     // MARK: GET
     func getAllHandler(_ req: Request) throws -> Future<[App]> {
-        return App.query(on: req).all()
+        return try App.query(on: req).sort(\.id, .ascending).all()
     }
     
     func getHandler(_ req: Request) throws -> Future<App> {
         return try req.parameters.next(App.self)
     }
     
-    // MARK: CREATE
+    // MARK: POST
     func createHandler(_ req: Request, app: App) throws -> Future<App> {
         return app.save(on: req)
     }
